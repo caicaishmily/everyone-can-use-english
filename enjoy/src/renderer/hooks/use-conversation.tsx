@@ -6,21 +6,19 @@ import { useContext } from "react";
 import { ChatMessageHistory, BufferMemory } from "langchain/memory";
 import { ConversationChain } from "langchain/chains";
 import { ChatOpenAI } from "@langchain/openai";
-import { ChatOllama } from "@langchain/community/chat_models/ollama";
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { ChatOllama } from "@langchain/ollama";
 import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import OpenAI from "openai";
-import { type Generation } from "langchain/dist/schema";
+import { type LLMResult } from "@langchain/core/outputs";
 import { v4 } from "uuid";
+import { useSpeech } from "./use-speech";
 
 export const useConversation = () => {
   const { EnjoyApp, user, apiUrl } = useContext(AppSettingsProviderContext);
-  const { openai, googleGenerativeAi, currentEngine } = useContext(
-    AISettingsProviderContext
-  );
+  const { openai } = useContext(AISettingsProviderContext);
+  const { tts } = useSpeech();
 
   const pickLlm = (conversation: ConversationType) => {
     const {
@@ -39,7 +37,7 @@ export const useConversation = () => {
         configuration: {
           baseURL: `${apiUrl}/api/ai`,
         },
-        maxRetries: 3,
+        maxRetries: 0,
         modelName: model,
         temperature,
         maxTokens,
@@ -55,6 +53,7 @@ export const useConversation = () => {
         configuration: {
           baseURL: baseUrl || openai.baseUrl,
         },
+        maxRetries: 0,
         modelName: model,
         temperature,
         maxTokens,
@@ -69,15 +68,7 @@ export const useConversation = () => {
         temperature,
         frequencyPenalty,
         presencePenalty,
-      });
-    } else if (conversation.engine === "googleGenerativeAi") {
-      if (!googleGenerativeAi) throw new Error("Google Generative AI API key is required");
-
-      return new ChatGoogleGenerativeAI({
-        apiKey: googleGenerativeAi.key,
-        modelName: model,
-        temperature: temperature,
-        maxOutputTokens: maxTokens,
+        maxRetries: 2,
       });
     }
   };
@@ -104,7 +95,7 @@ export const useConversation = () => {
         if (message.role === "user") {
           chatMessageHistory.addUserMessage(message.content);
         } else if (message.role === "assistant") {
-          chatMessageHistory.addAIChatMessage(message.content);
+          chatMessageHistory.addAIMessage(message.content);
         }
       });
 
@@ -154,12 +145,12 @@ export const useConversation = () => {
 
     const llm = pickLlm(conversation);
     const chain = new ConversationChain({
-      llm,
+      llm: llm as any,
       memory,
-      prompt,
+      prompt: prompt as any,
       verbose: true,
     });
-    let response: Generation[] = [];
+    let response: LLMResult["generations"][0] = [];
     await chain.call({ input: message.content }, [
       {
         handleLLMEnd: async (output) => {
@@ -221,60 +212,7 @@ export const useConversation = () => {
     return [reply];
   };
 
-  const tts = async (params: Partial<SpeechType>) => {
-    const { configuration } = params;
-    const {
-      engine = currentEngine.name,
-      model = "tts-1",
-      voice = "alloy",
-      baseUrl,
-    } = configuration || {};
-
-    let client: OpenAI;
-
-    if (engine === "enjoyai") {
-      client = new OpenAI({
-        apiKey: user.accessToken,
-        baseURL: `${apiUrl}/api/ai`,
-        dangerouslyAllowBrowser: true,
-      });
-    } else if (openai) {
-      client = new OpenAI({
-        apiKey: openai.key,
-        baseURL: baseUrl || openai.baseUrl,
-        dangerouslyAllowBrowser: true,
-      });
-    } else {
-      throw new Error("OpenAI API key is required");
-    }
-
-    const file = await client.audio.speech.create({
-      input: params.text,
-      model,
-      voice,
-    });
-    const buffer = await file.arrayBuffer();
-
-    return EnjoyApp.speeches.create(
-      {
-        text: params.text,
-        sourceType: params.sourceType,
-        sourceId: params.sourceId,
-        configuration: {
-          engine,
-          model,
-          voice,
-        },
-      },
-      {
-        type: "audio/mp3",
-        arrayBuffer: buffer,
-      }
-    );
-  };
-
   return {
     chat,
-    tts,
   };
 };

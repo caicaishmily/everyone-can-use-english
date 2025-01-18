@@ -11,11 +11,13 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  SheetTitle,
 } from "@renderer/components/ui";
 import {
   SpeechPlayer,
-  AudioDetail,
+  AudioPlayer,
   ConversationShortcuts,
+  MarkdownWrapper,
 } from "@renderer/components";
 import { useState, useEffect, useContext } from "react";
 import {
@@ -28,12 +30,13 @@ import {
   ForwardIcon,
   AlertCircleIcon,
   MoreVerticalIcon,
+  DownloadIcon,
 } from "lucide-react";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { t } from "i18next";
 import { AppSettingsProviderContext } from "@renderer/context";
-import Markdown from "react-markdown";
-import { useConversation } from "@renderer/hooks";
+import { useSpeech, useAiCommand } from "@renderer/hooks";
+import { formatDateTime } from "@renderer/lib/utils";
 
 export const AssistantMessageComponent = (props: {
   message: MessageType;
@@ -50,7 +53,8 @@ export const AssistantMessageComponent = (props: {
   const [resourcing, setResourcing] = useState<boolean>(false);
   const [shadowing, setShadowing] = useState<boolean>(false);
   const { EnjoyApp } = useContext(AppSettingsProviderContext);
-  const { tts } = useConversation();
+  const { tts } = useSpeech();
+  const { summarizeTopic } = useAiCommand();
 
   useEffect(() => {
     if (speech) return;
@@ -99,11 +103,20 @@ export const AssistantMessageComponent = (props: {
 
     if (!audio) {
       setResourcing(true);
+      let title =
+        speech.text.length > 20
+          ? speech.text.substring(0, 17).trim() + "..."
+          : speech.text;
+
+      try {
+        title = await summarizeTopic(speech.text);
+      } catch (e) {
+        console.warn(e);
+      }
+
       await EnjoyApp.audios.create(speech.filePath, {
-        name:
-          speech.text.length > 20
-            ? speech.text.substring(0, 17).trim() + "..."
-            : speech.text,
+        name: title,
+        originalText: speech.text,
       });
       setResourcing(false);
     }
@@ -111,16 +124,49 @@ export const AssistantMessageComponent = (props: {
     setShadowing(true);
   };
 
+  const handleDownload = async () => {
+    if (!speech) return;
+
+    EnjoyApp.dialog
+      .showSaveDialog({
+        title: t("download"),
+        defaultPath: speech.filename,
+        filters: [
+          {
+            name: "Audio",
+            extensions: [speech.filename.split(".").pop()],
+          },
+        ],
+      })
+      .then((savePath) => {
+        if (!savePath) return;
+
+        toast.promise(EnjoyApp.download.start(speech.src, savePath as string), {
+          loading: t("downloadingFile", { file: speech.filename }),
+          success: () => t("downloadedSuccessfully"),
+          error: t("downloadFailed"),
+          position: "bottom-right",
+        });
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+
   return (
-    <div
-      id={`message-${message.id}`}
-      className="ai-message flex items-end space-x-2 pr-10"
-    >
-      <Avatar className="w-8 h-8 bg-background avatar">
-        <AvatarImage></AvatarImage>
-        <AvatarFallback className="bg-background">AI</AvatarFallback>
-      </Avatar>
-      <div className="flex flex-col gap-2 px-4 py-2 bg-background border rounded-lg shadow-sm w-full">
+    <div id={`message-${message.id}`} className="ai-message">
+      <div className="flex items-center space-x-2 mb-2">
+        <Avatar className="w-8 h-8 bg-muted avatar">
+          <AvatarImage></AvatarImage>
+          <AvatarFallback className="bg-muted capitalize">
+            {configuration?.model?.[0] || "AI"}
+          </AvatarFallback>
+        </Avatar>
+        <div className="text-sm text-muted-foreground">
+          {configuration?.model}
+        </div>
+      </div>
+      <div className="flex flex-col gap-2 px-4 py-2 bg-background border rounded-lg shadow-sm w-full mb-2">
         {configuration.type === "tts" &&
           (speeching ? (
             <div className="text-muted-foreground text-sm py-2">
@@ -136,34 +182,25 @@ export const AssistantMessageComponent = (props: {
           ))}
 
         {configuration.type === "gpt" && (
-          <Markdown
-            className="message-content select-text prose"
-            components={{
-              a({ node, children, ...props }) {
-                try {
-                  new URL(props.href ?? "");
-                  props.target = "_blank";
-                  props.rel = "noopener noreferrer";
-                } catch (e) {}
-
-                return <a {...props}>{children}</a>;
-              },
-            }}
+          <MarkdownWrapper
+            className="message-content select-text prose dark:prose-invert max-w-full"
+            data-source-type="Message"
+            data-source-id={message.id}
           >
             {message.content}
-          </Markdown>
+          </MarkdownWrapper>
         )}
 
         {Boolean(speech) && <SpeechPlayer speech={speech} />}
 
         <DropdownMenu>
-          <div className="flex items-center justify-start space-x-2">
+          <div className="flex items-center justify-start space-x-4">
             {!speech &&
               (speeching ? (
                 <LoaderIcon
                   data-tooltip-id="global-tooltip"
                   data-tooltip-content={t("creatingSpeech")}
-                  className="w-3 h-3 animate-spin"
+                  className="w-4 h-4 animate-spin"
                 />
               ) : (
                 <SpeechIcon
@@ -171,19 +208,19 @@ export const AssistantMessageComponent = (props: {
                   data-tooltip-content={t("textToSpeech")}
                   data-testid="message-create-speech"
                   onClick={createSpeech}
-                  className="w-3 h-3 cursor-pointer"
+                  className="w-4 h-4 cursor-pointer"
                 />
               ))}
 
             {configuration.type === "gpt" && (
               <>
                 {copied ? (
-                  <CheckIcon className="w-3 h-3 text-green-500" />
+                  <CheckIcon className="w-4 h-4 text-green-500" />
                 ) : (
                   <CopyIcon
                     data-tooltip-id="global-tooltip"
                     data-tooltip-content={t("copyText")}
-                    className="w-3 h-3 cursor-pointer"
+                    className="w-4 h-4 cursor-pointer"
                     onClick={() => {
                       copyToClipboard(message.content);
                       setCopied(true);
@@ -200,7 +237,7 @@ export const AssistantMessageComponent = (props: {
                     <ForwardIcon
                       data-tooltip-id="global-tooltip"
                       data-tooltip-content={t("forward")}
-                      className="w-3 h-3 cursor-pointer"
+                      className="w-4 h-4 cursor-pointer"
                     />
                   }
                 />
@@ -212,7 +249,7 @@ export const AssistantMessageComponent = (props: {
                 <LoaderIcon
                   data-tooltip-id="global-tooltip"
                   data-tooltip-content={t("addingResource")}
-                  className="w-3 h-3 animate-spin"
+                  className="w-4 h-4 animate-spin"
                 />
               ) : (
                 <MicIcon
@@ -220,12 +257,21 @@ export const AssistantMessageComponent = (props: {
                   data-tooltip-content={t("shadowingExercise")}
                   data-testid="message-start-shadow"
                   onClick={startShadow}
-                  className="w-3 h-3 cursor-pointer"
+                  className="w-4 h-4 cursor-pointer"
                 />
               ))}
+            {Boolean(speech) && (
+              <DownloadIcon
+                data-tooltip-id="global-tooltip"
+                data-tooltip-content={t("download")}
+                data-testid="message-download-speech"
+                onClick={handleDownload}
+                className="w-4 h-4 cursor-pointer"
+              />
+            )}
 
             <DropdownMenuTrigger>
-              <MoreVerticalIcon className="w-3 h-3" />
+              <MoreVerticalIcon className="w-4 h-4" />
             </DropdownMenuTrigger>
           </div>
 
@@ -239,19 +285,32 @@ export const AssistantMessageComponent = (props: {
         </DropdownMenu>
       </div>
 
-      <Sheet open={shadowing} onOpenChange={(value) => setShadowing(value)}>
+      <div className="flex justify-start text-xs text-muted-foreground timestamp">
+        {formatDateTime(message.createdAt)}
+      </div>
+
+      <Sheet
+        modal={false}
+        open={shadowing}
+        onOpenChange={(value) => setShadowing(value)}
+      >
         <SheetContent
+          container="main-panel-content"
+          aria-describedby={undefined}
           side="bottom"
-          className="rounded-t-2xl shadow-lg"
+          className="h-content p-0 flex flex-col gap-0"
           displayClose={false}
+          onPointerDownOutside={(event) => event.preventDefault()}
+          onInteractOutside={(event) => event.preventDefault()}
         >
-          <SheetHeader className="flex items-center justify-center -mt-4 mb-2">
+          <SheetHeader className="flex items-center justify-center space-y-0 py-1">
+            <SheetTitle className="sr-only">{t("shadow")}</SheetTitle>
             <SheetClose>
               <ChevronDownIcon />
             </SheetClose>
           </SheetHeader>
 
-          {Boolean(speech) && <AudioDetail md5={speech.md5} />}
+          {Boolean(speech) && shadowing && <AudioPlayer md5={speech.md5} />}
         </SheetContent>
       </Sheet>
     </div>

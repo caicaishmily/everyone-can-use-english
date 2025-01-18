@@ -25,7 +25,7 @@
 > * 使用 AI 辅助工具将英文文字转换成语音文件；
 > * 跟读、朗读、直至完整背诵……
 
-AI 辅助工具，付费方案最好的是 [OpenAI](https://openai.com/)，无论是文字生成、还是语音生成。免费方案的话，文字生成可以用 [LM Studio](https://lmstudio.ai/)，甚至直接用免费的 [Google Translate](https://translate.google.com/)；语音生成可以用 [MS Edge TTS](https://en.wikipedia.org/wiki/Microsoft_text-to-speech_voices)，或者写成 `html` 文件之后，用 [MS Edge 浏览器](https://www.microsoft.com/en-us/edge)打开，也能有朗读功能。另外，网上也有很多方案，可以自己想办法。
+AI 辅助工具，付费方案最好的是 [OpenAI](https://openai.com/)，无论是文字生成、还是语音生成。免费方案的话，文字生成可以用 [LM Studio](https://lmstudio.ai/)，甚至直接用免费的 [Google Translate](https://translate.google.com/)；语音生成可以用 [MS Edge TTS](https://en.wikipedia.org/wiki/Microsoft_text-to-speech_voices)，或者写成 <span class="pho">html</span> 文件之后，用 [MS Edge 浏览器](https://www.microsoft.com/en-us/edge)打开，也能有朗读功能。另外，网上也有很多方案，可以自己想办法。
 
 你也可以用我写的两个 OpenAI GPTs：
 
@@ -58,8 +58,6 @@ AI 辅助工具，付费方案最好的是 [OpenAI](https://openai.com/)，无�
 三小时之外，如果你有时间精力，依然应该花时间输入英文，无论是阅读、还是听有声书或者看视频影视剧集。
 
 **早睡早起**可能非常有帮助，因为早上的时间完全没有他人打搅。晚上睡觉前的一小时，尽量不要把自己暴露在屏幕蓝光之下 —— 这对睡眠质量提高有巨大帮助。
-
-
 
 ## 1.4. 每天都要交作业
 

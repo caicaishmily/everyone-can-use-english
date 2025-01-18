@@ -13,6 +13,8 @@ import { ChevronLeftIcon, BookOpenTextIcon } from "lucide-react";
 import { t } from "i18next";
 import nlp from "compromise";
 import paragraphs from "compromise-paragraphs";
+import { useDebounce } from "@uidotdev/usehooks";
+import { type IpcRendererEvent } from "electron/renderer";
 nlp.plugin(paragraphs);
 
 export default () => {
@@ -31,20 +33,20 @@ export default () => {
   const [marked, setMarked] = useState<boolean>(false);
   const [doc, setDoc] = useState<any>(null);
 
-  const loadURL = () => {
-    if (!containerRef?.current) return;
-    if (!url) return;
+  const [webviewRect, setWebviewRect] = useState<DOMRect | null>(null);
+  const debouncedWebviewRect = useDebounce(webviewRect, 500);
 
+  const loadURL = () => {
     setError(null);
     setLoading(true);
     setStory({ url });
 
-    const rect = containerRef.current.getBoundingClientRect();
+    const { x, y, width, height } = debouncedWebviewRect;
     EnjoyApp.view.load(url, {
-      x: rect.x,
-      y: rect.y,
-      width: rect.width,
-      height: rect.height,
+      x,
+      y,
+      width,
+      height,
     });
   };
 
@@ -153,18 +155,39 @@ export default () => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    loadURL();
-  }, [url, containerRef]);
+  const onWindowChange = (
+    event: IpcRendererEvent,
+    state: { event: string }
+  ) => {
+    if (state.event === "resize") {
+      setWebviewRect(containerRef.current.getBoundingClientRect());
+    }
+  };
 
   useEffect(() => {
+    if (!containerRef?.current) return;
+    if (!url) return;
+    if (!debouncedWebviewRect) return;
+
+    loadURL();
     EnjoyApp.view.onViewState((_event, state) => onViewState(state));
 
     return () => {
       EnjoyApp.view.removeViewStateListeners();
       EnjoyApp.view.remove();
     };
-  }, []);
+  }, [url, containerRef, debouncedWebviewRect]);
+
+  useEffect(() => {
+    if (!containerRef?.current) return;
+
+    setWebviewRect(containerRef.current.getBoundingClientRect());
+    EnjoyApp.window.onChange((_event, state) => onWindowChange(_event, state));
+
+    return () => {
+      EnjoyApp.window.removeListener(onWindowChange);
+    };
+  }, [containerRef?.current]);
 
   useEffect(() => {
     if (readable) {
@@ -183,7 +206,7 @@ export default () => {
   }, [readable, loading]);
 
   return (
-    <div className="h-screen w-full flex flex-col bg-muted">
+    <div className="h-content w-full flex flex-col bg-muted">
       {(loading || !readable) && (
         <div className="h-12 flex items-center space-x-2 px-4 border-b shadow">
           <Button

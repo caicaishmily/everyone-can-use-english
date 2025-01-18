@@ -42,7 +42,7 @@
 * [GRE的Issue题目](files/GRE-Analytical-Writing-Argument-Task-Topics.md)
 * [GRE的Argument题目](files/GRE-Analytical-Writing-Issue-Task-Topics)
 
-在相当长一段时间里，我以为自己 “发现” 了一条真正的捷径，后来才发现 “我并不孤独”。在国内，卖得最好的口语教材，实际上是北京外国语大学的专业教材，作者是北外教授吴桢福老师：一共三本，《英语初级口语》、《英语中级口语》、《英语高级口语》，多年来多次再版，印数均超过 100 万本。如果读者有机会，不妨去书店翻翻这套教材──你会发现其中的大多数课文话题，实际上也许都是从 TOEFL 作文题脱胎而来的。
+在相当长一段时间里，我以为自己 “发现” 了一条真正的捷径，后来才发现 “我并不孤独”。在国内，卖得最好的口语教材，实际上是北京外国语大学的专业教材，作者是北外教授吴祯福老师：一共三本，《英语初级口语》、《英语中级口语》、《英语高级口语》，多年来多次再版，印数均超过 100 万本。如果读者有机会，不妨去书店翻翻这套教材──你会发现其中的大多数课文话题，实际上也许都是从 TOEFL 作文题脱胎而来的。
 
 请允许我重复一遍：**你的问题也许不在于你不会说，而在于你没什么话可说。**
 
@@ -80,7 +80,7 @@ Meanwhile, everyone is becoming even more distinctive, especially in terms of th
 10. Good afternoon.
 11. Good evening.
 12. Good night.
-13. Good-bye.<img src="/images/speech-tract-$1.svg" class="themed" />
+13. Good-bye.
 14. See you in the evening.
 15. So long.
 
@@ -134,8 +134,6 @@ Meanwhile, everyone is becoming even more distinctive, especially in terms of th
 没多久你就会发现：
 1. 实际上你必须表达的话并不多……
 2. 这些内容中的绝大多数其实你完全有能力用英文表达（最多查查词典就可以了）。
-
-
 在这个过程中，对你来说可能更重要的发现是你的中文，即，你的母语，并不像你自己原本以为的那么好。有时，你想说的话其实并不通顺。
 
 比如，某论坛上曾有一位用户提问：“请问，‘盲目地做出的决定通常是不理智的’，这句话用英文怎么写，请大家帮忙，谢谢！”
@@ -196,8 +194,6 @@ Meanwhile, everyone is becoming even more distinctive, especially in terms of th
 
 1. 在 …… 之下，比如 underground；
 2. ……不足、不良，比如，undernutrition，比如 underage drinking……
-
-
 读到 “underage drinking”（未成年人饮酒）的那一瞬间，我突然想到，实际上，我可以不用 “早恋” 这个词就能把我要说的说明白。其实，中国的父母害怕的并不是所谓的 “早恋”，如若一切发生在思维之中，他们很可能其实是并不关心的，就算因 “早恋” 发生了行动，拉拉手、亲亲嘴，他们也很可能不会太过紧张；然而，他们真的害怕自己的孩子发生 “underage sexual behaviors”……
 One of the reasons why many parents want to send their children to separate school is that they are worried about possible underage sexual behaviors.
 

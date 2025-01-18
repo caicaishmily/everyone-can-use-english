@@ -103,7 +103,7 @@
 在结绳记事的年代，人类还跟其它动物其实没有太大差异，只有文字出现之后，人类才开始拥有可（跨代）传播、可修正、可积累的所谓 “知识”。所以，书 写工具对人类来实在是太重要。毛笔、鹅毛笔、铅笔、钢笔、圆珠笔 …… 直到今天的各种各样的输入法以及字处理软件（MS Word 就是其中的一种），书写工具的每一次变革都伴随着人类巨大的进步。
 对中国学生来说，MS Word 不仅仅是 “字处理工具”，更是一个非常强大的学习利器。
 
-### 5.1 MS Word 2007 的 “鼠标取词” 功能
+### 5.1. MS Word 2007 的 “鼠标取词” 功能
 
 MS Word 从 2007 版本开始内嵌了 “鼠标取词” 功能。其所采用的词典是权威的《美国传统词典》的英汉版本，释义详实，例句丰富。“默认安装” 的情况下，鼠 标取词功能并未设置为开启状态，需要用户手动开启 —— 在鼠标右键的快捷菜单中选择 “翻译”，而后选定 “中文(中国)”：
 
@@ -113,7 +113,7 @@ MS Word 从 2007 版本开始内嵌了 “鼠标取词” 功能。其所采用�
 
 ![](images/figure19.png)
 
-### 5.2 MS Word 2007 的 “词典面板”
+### 5.2. MS Word 2007 的 “词典面板”
 
 在默认情况下，MS Word 有一个快捷键：“Alt + Left Mouse”：先按住 Alt 键，然后在任何一个英文单词上点击鼠标左键，MS Word 的侧边栏里就会显示这个单词的检索结果（这也相当于在该英文单词上点击鼠标右键，而后在快捷菜单中选择 “翻译”->“翻译”）：
 
@@ -125,7 +125,7 @@ MS Word 从 2007 版本开始内嵌了 “鼠标取词” 功能。其所采用�
 
 这个词典是英汉、汉英双向的。在文档中选定一个中文词汇，而后在选中的区域使用 “Alt + Left Mouse” 快捷键，右侧就将显示该中文词汇的英文释义。
 
-### 5.3 MS Word 2007 的 “同近义辞典”（Thesaurus）
+### 5.3. MS Word 2007 的 “同近义辞典”（Thesaurus）
 
 在任一英文单词上点击鼠标右键，都可以看到一个 “同义词” 快捷菜单。可以通过选中菜单子项而将文档中的词换为该同义词：
 
@@ -144,7 +144,7 @@ MS Word 从 2007 版本开始内嵌了 “鼠标取词” 功能。其所采用�
 
 ![](images/figure24.png)
 
-### 5.4 MS Word 2007 的 “英语助手”
+### 5.4. MS Word 2007 的 “英语助手”
 
 事实上，读者可能早就注意到右侧边栏的词典工具中最好的应该是 “英语助手”（而非 “翻译” 命令所呼出的 “双语词典”）。“英语助手” 包括几乎所有的 好东西：“中文释义”（相当于英汉词典）、“英文释义”（相当于英英词典）、“常用搭配”（相当于搭配辞典）和 “同义词”（相当于 Thesaurus）。 如何才能直接呼出 “英语助手” 呢？
 
@@ -166,13 +166,13 @@ MS Word 从 2007 版本开始内嵌了 “鼠标取词” 功能。其所采用�
 
 ![](images/figure27.png)
 
-而后在底部 “地址(A)” 之后的文字输入框里输入：“http://office.microsoft.com/Research/query.asmx”而后按“添加”按钮：
+而后在底部 “地址(A)” 之后的文字输入框里输入：“http://office.microsoft.com/Research/query.asmx” 而后按“添加”按钮：
 
 ![](images/figure272.png)
 
 点击这个对话框里的 “安装(I)” 按钮即可。
 
-### 5.5 为 MS Word 2007 设置单词朗读功能
+### 5.5. 为 MS Word 2007 设置单词朗读功能
 
 这一步稍微复杂一点，因为要为 Word 添加宏代码。
 在 Word 程序中，先关闭所有文档，之后按快捷键 “Alt+F11” 呼出 VBA 编辑器。
@@ -182,20 +182,22 @@ MS Word 从 2007 版本开始内嵌了 “鼠标取词” 功能。其所采用�
 
 之后再 VBA 编辑器的左侧 “工程” 面板里鼠标双击选定 “Normal – Microsoft Word 对象-ThisDocument”，程序主面板里输入以下 VBA 代码：
 
-<img src="/images/speech-tract-$1.svg" class="themed" />Sub SpeakText()
-<img src="/images/speech-tract-$1.svg" class="themed" />    On Error Resume Next
-<img src="/images/speech-tract-$1.svg" class="themed" />    Set speech = New SpVoice
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.MoveLeft Unit:=wdWord, Count:=1
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.MoveRight Unit:=wdWord, Count:=1, Extend:=wdExtend
-<img src="/images/speech-tract-$1.svg" class="themed" />    If Len(Selection.Text) > 1 Then
-<img src="/images/speech-tract-$1.svg" class="themed" />        speech.Speak Trim(Selection.Text), SVSFlagsAsync + SVSFPurgeBeforeSpeak
-<img src="/images/speech-tract-$1.svg" class="themed" />    End If
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.MoveRight Unit:=wdWord, Count:=1
-<img src="/images/speech-tract-$1.svg" class="themed" />    Do
-<img src="/images/speech-tract-$1.svg" class="themed" />        DoEvents
-<img src="/images/speech-tract-$1.svg" class="themed" />    Loop Until speech.WaitUntilDone(10)
-<img src="/images/speech-tract-$1.svg" class="themed" />    Set speech = Nothing
-<img src="/images/speech-tract-$1.svg" class="themed" />End Sub
+```vba
+Sub SpeakText()
+    On Error Resume Next
+    Set speech = New SpVoice
+    Selection.MoveLeft Unit:=wdWord, Count:=1
+    Selection.MoveRight Unit:=wdWord, Count:=1, Extend:=wdExtend
+    If Len(Selection.Text) > 1 Then
+        speech.Speak Trim(Selection.Text), SVSFlagsAsync + SVSFPurgeBeforeSpeak
+    End If
+    Selection.MoveRight Unit:=wdWord, Count:=1
+    Do
+        DoEvents
+    Loop Until speech.WaitUntilDone(10)
+    Set speech = Nothing
+End Sub
+```
 
 按快捷键 “CTRL+S” 保存之后关闭 VBA 编辑器。而后，就可以为这个宏设置快捷键了 —— 我个人选择是 “CTRL+SHIFT+S”。
 
@@ -203,7 +205,7 @@ MS Word 从 2007 版本开始内嵌了 “鼠标取词” 功能。其所采用�
 
 其实，为 Word 编写宏代码非常简单，VBA 的程序代码也比较易读。在当前文档最后的部分，我附加上了我自己最常用的宏代码。
 
-### 5.6 用 Word 2007 为自己定制阅读文章词汇列表
+### 5.6. 用 Word 2007 为自己定制阅读文章词汇列表
 
 MS Word 还有个很好的功能：“选择格式相似的文本(S)”。这样的话，就可以在阅读一篇英文文章的时候，顺手把生词都标记出来，而后可以通过 “选择格式相似的文本(S)” 把那些已经做了记号的文本单独拷贝出来。
 
@@ -230,78 +232,80 @@ MS Word 还有个很好的功能：“选择格式相似的文本(S)”。这样
 在阅读的过程中使用什么格式为文本做标记呢？“加重” 和 “倾斜” 可能并不是好的选择，因为文本中原本就可能有一些这样格式的文字；加高亮底色也不是 好的选择，不知道为什么 Word 的 “选择格式相似的文本(S)” 竟然不支持这种格式。我一般使用 “双下划线”。就象上面的图示里能看到的那样。这次不用自 定义，因为双下划线有 Word 默认设置好的快捷键 “Ctrl+Shift+D”。
 去掉所有记号的方法是，在某一个标记了 “双下划线” 的单词上点一下鼠标左键，然后，按刚刚设置好的快捷键 “Alt+S”，而后再按 “Ctrl+Shift+D” 就可以了。
 
-### 5.7 附录
+### 5.7. 附录
 
 以下是我个人常用的宏的代码：
 
-<img src="/images/speech-tract-$1.svg" class="themed" />'要使用该宏，需事先安装Merriam-Webster Collegiate Dictionary
-<img src="/images/speech-tract-$1.svg" class="themed" />Sub LookUpMerriamWebsterDictionary()
-<img src="/images/speech-tract-$1.svg" class="themed" />'MWDictionary Macro
-<img src="/images/speech-tract-$1.svg" class="themed" />     Selection.MoveLeft Unit:=wdWord, Count:=1
-<img src="/images/speech-tract-$1.svg" class="themed" />     Selection.MoveRight Unit:=wdWord, Count:=1, Extend:=wdExtend
-<img src="/images/speech-tract-$1.svg" class="themed" />     Selection.Copy
-<img src="/images/speech-tract-$1.svg" class="themed" />     Selection.MoveRight Unit:=wdWord, Count:=1
-<img src="/images/speech-tract-$1.svg" class="themed" />     If Tasks.Exists("Merriam-Webster") = True Then
-<img src="/images/speech-tract-$1.svg" class="themed" />        With Tasks("Merriam-Webster")
-<img src="/images/speech-tract-$1.svg" class="themed" />            .Activate
-<img src="/images/speech-tract-$1.svg" class="themed" />            .WindowState = wdWindowStateNormal
-<img src="/images/speech-tract-$1.svg" class="themed" />        End With
-<img src="/images/speech-tract-$1.svg" class="themed" />         SendKeys "%ep{ENTER}", 1
-<img src="/images/speech-tract-$1.svg" class="themed" />     Else
-<img src="/images/speech-tract-$1.svg" class="themed" />        Response = MsgBox("Task Merriam-Webster doesn't exist! Run the application before use this Macro, please.", vbExclamation, "WARNING!")
-<img src="/images/speech-tract-$1.svg" class="themed" />    End If
-<img src="/images/speech-tract-$1.svg" class="themed" />End Sub
+```vba
+'要使用该宏，需事先安装Merriam-Webster Collegiate Dictionary
+Sub LookUpMerriamWebsterDictionary()
+'MWDictionary Macro
+     Selection.MoveLeft Unit:=wdWord, Count:=1
+     Selection.MoveRight Unit:=wdWord, Count:=1, Extend:=wdExtend
+     Selection.Copy
+     Selection.MoveRight Unit:=wdWord, Count:=1
+     If Tasks.Exists("Merriam-Webster") = True Then
+        With Tasks("Merriam-Webster")
+            .Activate
+            .WindowState = wdWindowStateNormal
+        End With
+         SendKeys "%ep{ENTER}", 1
+     Else
+        Response = MsgBox("Task Merriam-Webster doesn't exist! Run the application before use this Macro, please.", vbExclamation, "WARNING!")
+    End If
+End Sub
 
-<img src="/images/speech-tract-$1.svg" class="themed" />Sub SpeakTheWord()
-<img src="/images/speech-tract-$1.svg" class="themed" />    On Error Resume Next
-<img src="/images/speech-tract-$1.svg" class="themed" />    Set speech = New SpVoice
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.MoveLeft Unit:=wdWord, Count:=1
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.MoveRight Unit:=wdWord, Count:=1, Extend:=wdExtend
-<img src="/images/speech-tract-$1.svg" class="themed" />    If Len(Selection.Text) > 1 Then 'speak selection
-<img src="/images/speech-tract-$1.svg" class="themed" />        speech.Speak Trim(Selection.Text), _
-<img src="/images/speech-tract-$1.svg" class="themed" />        SVSFlagsAsync + SVSFPurgeBeforeSpeak
-<img src="/images/speech-tract-$1.svg" class="themed" />    End If
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.MoveRight Unit:=wdWord, Count:=1
-<img src="/images/speech-tract-$1.svg" class="themed" />    Do
-<img src="/images/speech-tract-$1.svg" class="themed" />        DoEvents
-<img src="/images/speech-tract-$1.svg" class="themed" />    Loop Until speech.WaitUntilDone(10)
-<img src="/images/speech-tract-$1.svg" class="themed" />    Set speech = Nothing
-<img src="/images/speech-tract-$1.svg" class="themed" />End Sub
+Sub SpeakTheWord()
+    On Error Resume Next
+    Set speech = New SpVoice
+    Selection.MoveLeft Unit:=wdWord, Count:=1
+    Selection.MoveRight Unit:=wdWord, Count:=1, Extend:=wdExtend
+    If Len(Selection.Text) > 1 Then 'speak selection
+        speech.Speak Trim(Selection.Text), _
+        SVSFlagsAsync + SVSFPurgeBeforeSpeak
+    End If
+    Selection.MoveRight Unit:=wdWord, Count:=1
+    Do
+        DoEvents
+    Loop Until speech.WaitUntilDone(10)
+    Set speech = Nothing
+End Sub
 
-<img src="/images/speech-tract-$1.svg" class="themed" />' 为选中的文本加上双引号
-<img src="/images/speech-tract-$1.svg" class="themed" />Sub AddDoubleQuotationMarks()
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.InsertBefore ("“")
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.InsertAfter ("”")
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.MoveRight Unit:=wdWord, Count:=1
-<img src="/images/speech-tract-$1.svg" class="themed" />End Sub
+' 为选中的文本加上双引号
+Sub AddDoubleQuotationMarks()
+    Selection.InsertBefore ("“")
+    Selection.InsertAfter ("”")
+    Selection.MoveRight Unit:=wdWord, Count:=1
+End Sub
 
-<img src="/images/speech-tract-$1.svg" class="themed" />' 指定选中文本的字体
-<img src="/images/speech-tract-$1.svg" class="themed" />Sub ChangeFontNameTo()
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.Font.Name = "Georgia"
-<img src="/images/speech-tract-$1.svg" class="themed" />End Sub
+' 指定选中文本的字体
+Sub ChangeFontNameTo()
+    Selection.Font.Name = "Georgia"
+End Sub
 
-<img src="/images/speech-tract-$1.svg" class="themed" />' 指定选中文本的字号大小
-<img src="/images/speech-tract-$1.svg" class="themed" />Sub ChangeFontSizeTo()
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.Font.Size = 28
-<img src="/images/speech-tract-$1.svg" class="themed" />End Sub
+' 指定选中文本的字号大小
+Sub ChangeFontSizeTo()
+    Selection.Font.Size = 28
+End Sub
 
-<img src="/images/speech-tract-$1.svg" class="themed" />' 将选中文本的字号放大
-<img src="/images/speech-tract-$1.svg" class="themed" />Sub FontSizeGrow()
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.Font.Grow
-<img src="/images/speech-tract-$1.svg" class="themed" />End Sub
+' 将选中文本的字号放大
+Sub FontSizeGrow()
+    Selection.Font.Grow
+End Sub
 
-<img src="/images/speech-tract-$1.svg" class="themed" />' 将选中文本的字号缩小
-<img src="/images/speech-tract-$1.svg" class="themed" />Sub FontSizeShrink()
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.Font.Shrink
-<img src="/images/speech-tract-$1.svg" class="themed" />End Sub
+' 将选中文本的字号缩小
+Sub FontSizeShrink()
+    Selection.Font.Shrink
+End Sub
 
-<img src="/images/speech-tract-$1.svg" class="themed" />' 将双标所在的词汇首字母变成大写
-<img src="/images/speech-tract-$1.svg" class="themed" />Sub FirstLetterToUppercase()
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.MoveLeft Unit:=wdWord, Count:=1
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.MoveRight Unit:=wdCharacter, Count:=1, Extend:=wdExtend
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.Text = UCase(Selection.Text)
-<img src="/images/speech-tract-$1.svg" class="themed" />    Selection.MoveRight Unit:=wdWord, Count:=1
-<img src="/images/speech-tract-$1.svg" class="themed" />End Sub
+' 将双标所在的词汇首字母变成大写
+Sub FirstLetterToUppercase()
+    Selection.MoveLeft Unit:=wdWord, Count:=1
+    Selection.MoveRight Unit:=wdCharacter, Count:=1, Extend:=wdExtend
+    Selection.Text = UCase(Selection.Text)
+    Selection.MoveRight Unit:=wdWord, Count:=1
+End Sub
+```
 
 ## 6 .关于韦氏词典
 
@@ -362,8 +366,6 @@ Advanced Searches 内还可以使用 “与(AND)、或(OR)、非(NOT)” 构建�
 注意：我所推荐使用的是这部词典电子版的第三版，而非最新的第五版。柯林斯 (Collins)的第五版除了外观花哨一点之外几乎一无是处，大量原本在第三版相当实用的功能被 “砍” 掉了。总是有些软件经过升级之后变得比原来差，类似的例子数不胜数。Office 升级到 2007 之后，其内嵌词典内容竟然没办法 “全部选择”；金山词霸 2005 版之后的版本中竟然 “砍” 掉了它最有用的功能 “全文检索”；Merriam-Webster 的 2.5 版无论如何看不出相对于 3.0 版改进的地方在哪里 …… 朗文(Longman)的新版改进倒是相当明显，可是对我来说用处不大，因为那些实用的功能在 Word 里已经几乎全有了。
 
 ![](images/figure38.png)
-
-
 柯林斯的释义方式是最适合英语学习者使用的。比如，“plug” 这个词的第六个释义是这样的：
 
 > **6 plug plugs plugging plugged**
@@ -402,8 +404,6 @@ Advanced Searches 内还可以使用 “与(AND)、或(OR)、非(NOT)” 构建�
 最好玩的是柯林斯(Collins)第三版中有个未开放的内容，Collins Cobuild English Grammar 的全文电子版。这本书的中译本由商务印书馆出版发行；也是我最推崇的语法书之一。（发现这个功能纯属偶然，是某次敲错了键盘却最终找到了宝。）
 
 ![](images/figure44.png)
-
-
 在柯林斯(Collins)词典的输入框里输入”1.1″而后回车，就可以看到词典的第一章第一节。而后可以通过工具栏上的 “A←” 和 “→Z” 图标 “前翻” 和 “后翻”。如果手中有印刷版，想要查看电子版，只需要输入相应章节号码而后回车即可。（这么好的功能在柯林斯第五版里被砍掉了……）
 
 ![](images/figure45.png)

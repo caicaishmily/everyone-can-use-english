@@ -16,7 +16,9 @@ export default defineConfig((env) => {
     mode,
     base: "./",
     build: {
+      sourcemap: true,
       outDir: `.vite/renderer/${name}`,
+      target: "esnext",
     },
     plugins: [
       pluginExposeRenderer(name),
@@ -36,10 +38,17 @@ export default defineConfig((env) => {
         "@": path.resolve(__dirname, "./src"),
         "@renderer": path.resolve(__dirname, "./src/renderer"),
         "@commands": path.resolve(__dirname, "./src/commands"),
+        "vendor/pdfjs": path.resolve(
+          __dirname,
+          "./node_modules/foliate-js/vendor/pdfjs"
+        ),
       },
     },
     optimizeDeps: {
       exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"],
+      esbuildOptions: {
+        target: "esnext",
+      },
     },
     clearScreen: false,
   } as UserConfig;

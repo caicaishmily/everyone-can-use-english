@@ -5,6 +5,7 @@ import sup from "markdown-it-sup";
 import sub from "markdown-it-sub";
 import mark from "markdown-it-mark";
 import ins from "markdown-it-ins";
+import carousel from "./lib/markdown-it-carousel";
 
 // import markdownit from 'markdown-it'
 
@@ -91,150 +92,215 @@ export default withMermaid(
           },
           {
             text: "语音塑造",
+            link: "/sounds-of-american-english/0-intro",
             collapsed: true,
             items: [
               {
                 text: "1. 基础",
-                collapsed: true,
-                link: "/sounds-of-english/01-basics",
+                link: "/sounds-of-american-english/1-basics",
                 items: [
                   {
-                    text: "1.1. 音素",
+                    text: "1.1. 音素音标",
+                    link: "/sounds-of-american-english/1.1-phonemes",
+                  },
+                  {
+                    text: "1.2. 英文字母",
+                    link: "/sounds-of-american-english/1.2-alphabets",
+                  },
+                ],
+              },
+              {
+                text: "2. 发声器官",
+                link: "/sounds-of-american-english/2-articulators",
+              },
+              {
+                text: "3. 音素详解",
+                collapsed: true,
+                link: "/sounds-of-american-english/3-details",
+                items: [
+                  {
+                    text: "3.1. 元音",
                     collapsed: true,
-                    link: "/sounds-of-english/01-phonemes",
+                    link: "/sounds-of-american-english/3.1-vowels",
                     items: [
                       {
-                        text: "1.1.1. 元音",
-                        link: "/sounds-of-english/01-1-vowels",
+                        text: "3.1.1. ə/ɚ/ɝː",
+                        link: "/sounds-of-american-english/3.1.1-ə",
                       },
                       {
-                        text: "1.1.2. 辅音",
-                        link: "/sounds-of-english/01-2-consonants",
+                        text: "3.1.2. ʌ/ɑː/ɑːr",
+                        link: "/sounds-of-american-english/3.1.2-ɑ",
                       },
                       {
-                        text: "1.1.3. 美式语音标注",
-                        link: "/sounds-of-english/01-3-us-phonemes",
+                        text: "3.1.3. ɪ/i/iː/ɪr",
+                        link: "/sounds-of-american-english/3.1.3-i",
                       },
                       {
-                        text: "1.1.4. 示例",
-                        link: "/sounds-of-english/01-4-pangram",
+                        text: "3.1.4. ʊ/u/uː/ʊr",
+                        link: "/sounds-of-american-english/3.1.4-u",
+                      },
+                      {
+                        text: "3.1.5. e/æ/er",
+                        link: "/sounds-of-american-english/3.1.5-e",
+                      },
+                      {
+                        text: "3.1.6. ɒ/ɑː/ɔː/ɔːrː",
+                        link: "/sounds-of-american-english/3.1.6-ɔ",
+                      },
+                      {
+                        text: "3.1.7. aɪ... oʊ",
+                        link: "/sounds-of-american-english/3.1.7-aɪ",
                       },
                     ],
                   },
                   {
-                    text: "1.2. 音节",
-                    link: "/sounds-of-english/02-syllables",
-                  },
-                ],
-              },
-              {
-                text: "2. 详解",
-                collapsed: true,
-                link: "/sounds-of-english/03-details",
-                items: [
-                  {
-                    text: "2.1. 元音",
-                    collapsed: false,
-                    link: "/sounds-of-english/03-vowels-overview",
+                    text: "3.2. 辅音",
+                    collapsed: true,
+                    link: "/sounds-of-american-english/3.2-consonants",
                     items: [
                       {
-                        text: "2.1.1. 口腔内气流共鸣位置",
-                        link: "/sounds-of-english/04-vowel-positions",
+                        text: "3.2.1. p/b",
+                        link: "/sounds-of-american-english/3.2.1-pb",
                       },
-                      { text: "2.1.2. ʌ/ɑː", link: "/sounds-of-english/05-Ʌ" },
-                      { text: "2.1.3. e/æ", link: "/sounds-of-english/06-e" },
-                      { text: "2.1.4. ə/əː", link: "/sounds-of-english/07-ə" },
-                      { text: "2.1.5. ɪ/iː", link: "/sounds-of-english/08-i" },
-                      { text: "2.1.6. ʊ/uː", link: "/sounds-of-english/09-u" },
-                      { text: "2.1.7. ɔ/ɔː", link: "/sounds-of-english/10-ɔ" },
                       {
-                        text: "2.1.8. aɪ, eɪ, ɔɪ, aʊ, əʊ, eə, ɪə, ʊə",
-                        link: "/sounds-of-english/11-aɪ",
+                        text: "3.2.2. t/d",
+                        link: "/sounds-of-american-english/3.2.2-td",
+                      },
+                      {
+                        text: "3.2.3. k/g",
+                        link: "/sounds-of-american-english/3.2.3-kg",
+                      },
+                      {
+                        text: "3.2.4. f/v",
+                        link: "/sounds-of-american-english/3.2.4-fv",
+                      },
+                      {
+                        text: "3.2.5. s/z",
+                        link: "/sounds-of-american-english/3.2.5-sz",
+                      },
+                      {
+                        text: "3.2.6. θ/ð",
+                        link: "/sounds-of-american-english/3.2.6-θð",
+                      },
+                      {
+                        text: "3.2.7. ʃ/ʒ",
+                        link: "/sounds-of-american-english/3.2.7-ʃʒ",
+                      },
+                      {
+                        text: "3.2.8. tʃ/dʒ",
+                        link: "/sounds-of-american-english/3.2.8-tʃdʒ",
+                      },
+                      {
+                        text: "3.2.9. tr/dr",
+                        link: "/sounds-of-american-english/3.2.9-trdr",
+                      },
+                      {
+                        text: "3.2.10. ts/dz",
+                        link: "/sounds-of-american-english/3.2.10-tsdz",
+                      },
+                      {
+                        text: "3.2.11. m, n, ŋ",
+                        link: "/sounds-of-american-english/3.2.11-mnŋ",
+                      },
+                      {
+                        text: "3.2.12. l, r",
+                        link: "/sounds-of-american-english/3.2.12-lr",
+                      },
+                      {
+                        text: "3.2.13. w, j",
+                        link: "/sounds-of-american-english/3.2.13-wj",
+                      },
+                      {
+                        text: "3.2.14. h",
+                        link: "/sounds-of-american-english/3.2.14-h",
                       },
                     ],
                   },
                   {
-                    text: "2.2. 辅音",
-                    collapsed: false,
-                    link: "/sounds-of-english/12-consonants-overview",
-                    items: [
-                      {
-                        text: "2.2.1. p, b, m, n, f, k, g, h",
-                        link: "/sounds-of-english/13-pbmnfkgh",
-                      },
-                      { text: "2.2.2. f, v", link: "/sounds-of-english/14-fv" },
-                      {
-                        text: "2.2.3. m, n, ŋ",
-                        link: "/sounds-of-english/15-mn",
-                      },
-                      {
-                        text: "2.2.4. t, d, s, z; ʃ, tʃ, dʒ",
-                        link: "/sounds-of-english/16-tdsz",
-                      },
-                      { text: "2.2.5. t, d", link: "/sounds-of-english/17-td" },
-                      {
-                        text: "2.2.6. tr, dr, ts, dz",
-                        link: "/sounds-of-english/18-trdr",
-                      },
-                      {
-                        text: "2.2.7. sp, st, str, sk",
-                        link: "/sounds-of-english/19-sptk",
-                      },
-                      { text: "2.2.8. h", link: "/sounds-of-english/20-h" },
-                      { text: "2.2.9. θ, ð", link: "/sounds-of-english/21-θð" },
-                      { text: "2.2.10. r", link: "/sounds-of-english/22-r" },
-                      { text: "2.2.11. l", link: "/sounds-of-english/23-l" },
-                      { text: "2.2.12. ʒ", link: "/sounds-of-english/24-ʒ" },
-                      {
-                        text: "2.2.13. j, w",
-                        link: "/sounds-of-english/25-jw",
-                      },
-                    ],
-                  },
-                  {
-                    text: "2.3. 连读",
-                    link: "/sounds-of-english/26-catenation",
-                  },
-                  {
-                    text: "2.4. 音标学习",
-                    link: "/sounds-of-english/27-learning-phonetics",
-                  },
-                  {
-                    text: "2.4. 英美口音选择",
-                    link: "/sounds-of-english/28-choosing-accent",
+                    text: "3.3. 变体",
+                    link: "/sounds-of-american-english/3.3-variations",
                   },
                 ],
               },
               {
-                text: "3. 进阶",
+                text: "4. 自然语流",
                 collapsed: true,
-                link: "/sounds-of-english/29-advanced",
+                link: "/sounds-of-american-english/4-natural-speech",
                 items: [
                   {
-                    text: "3.1 什么更重要？",
-                    link: "/sounds-of-english/30-more-important",
+                    text: "4.1. 音节",
+                    link: "/sounds-of-american-english/4.1-syllables",
                   },
-                  { text: "3.2 停顿", link: "/sounds-of-english/31-pause" },
-                  { text: "3.3 高低", link: "/sounds-of-english/32-high-low" },
-                  { text: "3.4 起伏", link: "/sounds-of-english/33-up-down" },
                   {
-                    text: "3.5 轻重",
-                    link: "/sounds-of-english/34-strong-weak",
+                    text: "4.2. 单词",
+                    link: "/sounds-of-american-english/4.2-words",
                   },
-                  { text: "3.6 缓急", link: "/sounds-of-english/35-fast-slow" },
                   {
-                    text: "3.7 长短",
-                    link: "/sounds-of-english/36-long-short",
+                    text: "4.3. 意群",
+                    link: "/sounds-of-american-english/4.3-grouping",
+                  },
+                  {
+                    text: "4.4. 连接",
+                    link: "/sounds-of-american-english/4.4-linking",
+                  },
+                  {
+                    text: "4.5. 句子",
+                    link: "/sounds-of-american-english/4.5-sentences",
                   },
                 ],
               },
               {
-                text: "4. 收官",
+                text: "5. 基础之上",
+                link: "/sounds-of-american-english/5-above-ground",
+              },
+              {
+                text: "6. 词汇构建",
                 collapsed: true,
-                link: "/sounds-of-english/37-round-up",
+                link: "/sounds-of-american-english/6-vocabulary",
                 items: [
-                  { text: "4.1 流利", link: "/sounds-of-english/38-fluent" },
-                  { text: "4.2 情绪", link: "/sounds-of-english/39-emotional" },
+                  {
+                    text: "6.1. 有效记忆单词",
+                    link: "/sounds-of-american-english/6.1-effectiveness",
+                  },
+                  {
+                    text: "6.2. 多音拼写",
+                    link: "/sounds-of-american-english/6.2-polyphonic-spellings",
+                  },
+                  {
+                    text: "6.3. 常见复合词汇",
+                    link: "/sounds-of-american-english/6.3-compound-words",
+                  },
+                  {
+                    text: "6.4. 常见词根词缀",
+                    link: "/sounds-of-american-english/6.4-parts-of-words",
+                  },
+                ],
+              },
+              {
+                text: "7. 从此之后",
+                link: "/sounds-of-american-english/7-whats-next",
+              },
+              {
+                text: "8. 附录",
+                collapsed: true,
+                link: "/sounds-of-american-english/8-appendix",
+                items: [
+                  {
+                    text: "8.1. 输入音标与特殊符号",
+                    link: "/sounds-of-american-english/8.1-inputting-phonemes-and-symbols",
+                  },
+                  {
+                    text: "8.2. 获取 CEPD 音标",
+                    link: "/sounds-of-american-english/8.2-cepd-phonetics-and-sound",
+                  },
+                  {
+                    text: "8.3. 音标练习",
+                    link: "/sounds-of-american-english/8.3-phoneme-exercises",
+                  },
+                  {
+                    text: "8.4. 每日练习语音生成",
+                    link: "/sounds-of-american-english/8.4-daily-speech-exercises",
+                  },
                 ],
               },
             ],
@@ -306,6 +372,61 @@ export default withMermaid(
               { text: "10. 返璞归真", link: "/self-training/10-going-back" },
             ],
           },
+          {
+            text: "Enjoy App",
+            collapsed: true,
+            link: `/enjoy-app/`,
+            items: [
+              {
+                text: "快速开始",
+                collapsed: false,
+                items: [
+                  { text: "Enjoy 简介", link: "/enjoy-app/" },
+                  { text: "下载安装", link: "/enjoy-app/install" },
+                  { text: "软件设置", link: "/enjoy-app/settings" },
+                ],
+              },
+              {
+                text: "跟读训练",
+                collapsed: false,
+                items: [
+                  { text: "音频资源", link: "/enjoy-app/audios" },
+                  { text: "视频资源", link: "/enjoy-app/videos" },
+                ],
+              },
+              {
+                text: "阅读文本",
+                collapsed: false,
+                items: [
+                  { text: "在线文章", link: "/enjoy-app/webpage" },
+                  { text: "本地电子书", link: "/enjoy-app/ebook" },
+                ],
+              },
+              {
+                text: "智能助手",
+                collapsed: false,
+                items: [
+                  { text: "简介", link: "/enjoy-app/ai-assistant" },
+                  { text: "GPT 服务", link: "/enjoy-app/gpt-conversation" },
+                  { text: "TTS 服务", link: "/enjoy-app/tts-conversation" },
+                ],
+              },
+              {
+                text: "其他",
+                collapsed: false,
+                items: [
+                  {
+                    text: "常见问题",
+                    link: "/enjoy-app/faq",
+                  },
+                  {
+                    text: "利用 AI 生成训练材料",
+                    link: "/enjoy-app/use-case-generate-audio-resources",
+                  },
+                ],
+              },
+            ],
+          },
         ],
 
         "/enjoy-app/": [
@@ -316,6 +437,7 @@ export default withMermaid(
               { text: "Enjoy 简介", link: "/enjoy-app/" },
               { text: "下载安装", link: "/enjoy-app/install" },
               { text: "软件设置", link: "/enjoy-app/settings" },
+              { text: "版本更新", link: "/enjoy-app/changelog" },
             ],
           },
           {
@@ -327,11 +449,22 @@ export default withMermaid(
             ],
           },
           {
+            text: "聊天",
+            collapsed: false,
+            items: [
+              { text: "简介", link: "/enjoy-app/chat" },
+              { text: "与智能体对话", link: "/enjoy-app/chat-with-agent" },
+              { text: "多个智能体群聊", link: "/enjoy-app/chat-group" },
+              { text: "Copilot", link: "/enjoy-app/chat-copilot" },
+            ],
+          },
+          {
             text: "阅读文本",
             collapsed: false,
             items: [
-              { text: "在线文章", link: "/enjoy-app/webpage" },
-              { text: "本地电子书", link: "/enjoy-app/ebook" },
+              { text: "简介", link: "/enjoy-app/document" },
+              { text: "本地文档", link: "/enjoy-app/document-ebook" },
+              { text: "在线文章", link: "/enjoy-app/document-webpage" },
             ],
           },
           {
@@ -344,14 +477,22 @@ export default withMermaid(
             ],
           },
           {
-            text: "使用案例",
+            text: "其他",
             collapsed: false,
             items: [
+              {
+                text: "常见问题",
+                link: "/enjoy-app/faq",
+              },
               {
                 text: "利用 AI 生成训练材料",
                 link: "/enjoy-app/use-case-generate-audio-resources",
               },
             ],
+          },
+          {
+            text: "返回",
+            link: "/intro",
           },
         ],
       },
@@ -359,10 +500,16 @@ export default withMermaid(
       socialLinks: [
         {
           icon: "github",
-          link: "https://github.com/xiaolai/everyone-can-use-english/tree/main/1000-hours",
+          link: "https://github.com/zuodaotech/everyone-can-use-english/tree/main/1000-hours",
         },
       ],
     },
+
+    sitemap: {
+      hostname: "https://1000h.org",
+    },
+
+    lastUpdated: true,
 
     markdown: {
       // https://vitepress.dev/reference/markdown
@@ -374,10 +521,11 @@ export default withMermaid(
         md.use(sup);
         md.use(mark);
         md.use(ins);
+        md.use(carousel);
       },
-      // toc: {
-      //   level: [2, 3, 4]
-      // }
+      toc: {
+        level: [1, 2, 3],
+      },
     },
   })
 );
